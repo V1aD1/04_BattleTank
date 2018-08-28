@@ -4,6 +4,7 @@
 
 #include "Tank.h"
 #include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
@@ -15,9 +16,14 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
-public:
-	ATank* GetControlledTank() const;
-	
+public:	
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+	
+private:
+	ATank * GetControlledTank() const;
+
+	//start moving the barrel so that show hits where cross hair is aiming
+	void AimTowardsCrosshair();
 	
 };

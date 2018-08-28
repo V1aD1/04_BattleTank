@@ -1,19 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TankPlayerController.h"
 #include "BattleTank.h"
+#include "TankAIController.h"
 
-void ATankPlayerController::BeginPlay() {
+void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
 
 	auto tank = GetControlledTank();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const {
-	ATank* ControlledTank =  Cast<ATank>(GetPawn());
-	
+ATank* ATankAIController::GetControlledTank() const {
+	ATank* ControlledTank = Cast<ATank>(GetPawn());
+
 	if (ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Player Controller tank name: %s"), *ControlledTank->GetName())
+		UE_LOG(LogTemp, Warning, TEXT("AI Controller tank name: %s"), *ControlledTank->GetName())
 	}
 
 	else {

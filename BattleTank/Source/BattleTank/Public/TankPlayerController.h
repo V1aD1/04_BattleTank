@@ -26,6 +26,7 @@ private:
 	//start moving the barrel so that show hits where cross hair is aiming
 	void AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 
 	UPROPERTY(EditAnywhere)
 	float CrossHairXLocation = 0.5;

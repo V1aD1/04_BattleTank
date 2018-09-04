@@ -16,8 +16,8 @@ void ATankPlayerController::Tick(float DeltaSeconds) {
 }
 
 ATank* ATankPlayerController::GetControlledTank() const {
-	ATank* ControlledTank =  Cast<ATank>(GetPawn());
-	
+	ATank* ControlledTank = Cast<ATank>(GetPawn());
+
 	if (ControlledTank) {
 		UE_LOG(LogTemp, Warning, TEXT("Player Controller tank name: %s"), *ControlledTank->GetName());
 	}
@@ -42,7 +42,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 		UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *OutHitLocation.ToString());
 		//aim barrell at this point
 	}
-		
+
 
 }
 
@@ -50,12 +50,18 @@ void ATankPlayerController::AimTowardsCrosshair() {
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
 	//find crosshair position on screen
-	int32 ViewPortSizeX, ViewPortSizeY;	
+	int32 ViewPortSizeX, ViewPortSizeY;
 	GetViewportSize(ViewPortSizeX, ViewPortSizeY);
 	auto ScreenLocation = FVector2D(ViewPortSizeX*CrossHairXLocation, ViewPortSizeY*CrossHairYLocation);
 
 	//de-project screen position to world direction
+	FVector ScreenDirection;
+	FVector LookDirection;
+	if (!GetLookDirection(ScreenLocation, LookDirection)) {
+		return false;
+	}
 
+	UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *LookDirection.ToString())
 	//line trace along look direction
 
 	//see what we hit
@@ -63,3 +69,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	return true;
 }
 
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const {
+	FVector WorldLocation; //to be discarded
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldLocation, LookDirection);
+}

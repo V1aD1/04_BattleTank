@@ -39,7 +39,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 
 	//get world location thorugh crosshair
 	if (GetSightRayHitLocation(OutHitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *OutHitLocation.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *OutHitLocation.ToString());
 		//aim barrell at this point
 	}
 		
@@ -49,8 +49,17 @@ void ATankPlayerController::AimTowardsCrosshair() {
 // Returns true and populates OutHitLocation if crosshair is hitting something
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
-	
-	OutHitLocation = FVector(1);
+	//find crosshair position on screen
+	int32 ViewPortSizeX, ViewPortSizeY;	
+	GetViewportSize(ViewPortSizeX, ViewPortSizeY);
+	auto ScreenLocation = FVector2D(ViewPortSizeX*CrossHairXLocation, ViewPortSizeY*CrossHairYLocation);
+
+	//de-project screen position to world direction
+
+	//line trace along look direction
+
+	//see what we hit
+
 	return true;
 }
 

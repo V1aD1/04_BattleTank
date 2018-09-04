@@ -11,6 +11,8 @@ void ATankPlayerController::BeginPlay() {
 
 void ATankPlayerController::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
+
+	AimTowardsCrosshair();
 }
 
 ATank* ATankPlayerController::GetControlledTank() const {
@@ -32,9 +34,23 @@ void ATankPlayerController::AimTowardsCrosshair() {
 		return;
 	}
 
-	//get world location thorugh crosshair
-	//if it  hits landscape
-		//aim barrell at this point
 
+	FVector OutHitLocation; // out param
+
+	//get world location thorugh crosshair
+	if (GetSightRayHitLocation(OutHitLocation)) {
+		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *OutHitLocation.ToString());
+		//aim barrell at this point
+	}
+		
+
+}
+
+// Returns true and populates OutHitLocation if crosshair is hitting something
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+{
+	
+	OutHitLocation = FVector(1);
+	return true;
 }
 

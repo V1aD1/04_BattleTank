@@ -25,5 +25,7 @@ private:
 
 	//start moving the barrel so that show hits where cross hair is aiming
 	void AimTowardsCrosshair();
-	
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+
+
 };

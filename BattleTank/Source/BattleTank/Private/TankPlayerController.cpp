@@ -19,11 +19,7 @@ void ATankPlayerController::Tick(float DeltaSeconds) {
 ATank* ATankPlayerController::GetControlledTank() const {
 	ATank* ControlledTank = Cast<ATank>(GetPawn());
 
-	if (ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("Player Controller tank name: %s"), *ControlledTank->GetName());
-	}
-
-	else {
+	if (!ControlledTank) {
 		UE_LOG(LogTemp, Warning, TEXT("No player controller tank found!!"));
 	}
 
@@ -36,11 +32,12 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	}
 
 
-	FVector OutHitLocation; // out param
+	FVector HitLocation; // out param
 
 	//get world location thorugh crosshair
-	if (GetSightRayHitLocation(OutHitLocation)) {
+	if (GetSightRayHitLocation(HitLocation)) {
 		//aim barrell at this point
+		GetControlledTank()->AimAt(HitLocation);
 	}
 
 
@@ -61,9 +58,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 
 		//line trace along look direction
 		GetLookVectorHitLocation(LookDirection, HitLocation);
-
-
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location: %s"), *HitLocation.ToString())
 
 
 		//see what we hit

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Engine/World.h"
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 #include "BattleTank.h"
 
 void ATankPlayerController::BeginPlay() {
@@ -37,7 +37,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	//get world location thorugh crosshair
 	if (GetSightRayHitLocation(HitLocation)) {
 		//aim barrell at this point
-		GetControlledTank()->AimAt(HitLocation);
+		GetControlledTank()-> AimAt(HitLocation);
 	}
 
 

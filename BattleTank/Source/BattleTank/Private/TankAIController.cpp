@@ -34,6 +34,7 @@ void ATankAIController::Tick(float DeltaSeconds)
 
 	//move towards the player
 
+
 	//aim at the player
 	ThisTank->AimAt(GetPlayerTank()->GetActorLocation());
 

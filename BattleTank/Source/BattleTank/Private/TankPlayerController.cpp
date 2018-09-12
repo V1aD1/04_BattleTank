@@ -36,7 +36,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 
 	//get world location thorugh crosshair
 	if (GetSightRayHitLocation(HitLocation)) {
-		//aim barrell at this point
+		//aim barrel at this point
 		GetControlledTank()-> AimAt(HitLocation);
 	}
 

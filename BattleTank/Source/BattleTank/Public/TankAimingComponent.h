@@ -9,7 +9,7 @@
 //forward declaration
 class UTankBarrel; 
 
-// Holde barrel's properties and Elevate() method
+// Holds barrel's properties and Elevate() method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {

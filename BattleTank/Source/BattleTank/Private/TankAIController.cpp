@@ -4,6 +4,7 @@
 #include "Engine/World.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "BattleTank.h"
+#include "Tank.h"
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();

@@ -40,8 +40,6 @@ void ATankPlayerController::AimTowardsCrosshair() {
 		//aim barrel at this point
 		GetControlledTank()-> AimAt(HitLocation);
 	}
-
-
 }
 
 // Returns true and populates OutHitLocation if crosshair is hitting something

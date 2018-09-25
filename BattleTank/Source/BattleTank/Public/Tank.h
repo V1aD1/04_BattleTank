@@ -25,7 +25,7 @@ public:
 	void AimAt(FVector HitLocation) const;
 
 	UFUNCTION(BlueprintCallable)
-	void Fire() const;
+	void Fire();
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
@@ -47,4 +47,7 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UTankBarrel* Barrel = nullptr;
+
+	float ReloadTimeInSeconds = 3;
+	double LastFireTime = 0;
 };

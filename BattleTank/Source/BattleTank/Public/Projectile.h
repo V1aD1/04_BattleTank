@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -14,10 +15,13 @@ class BATTLETANK_API AProjectile : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AProjectile();
+	void LaunchProjectile(float speed);
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
 public:	
 	// Called every frame

@@ -50,10 +50,9 @@ void ATank::Fire() const {
 	{
 		return;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Firing"));
 
 	if (Barrel->DoesSocketExist("Projectile")) {
-		UE_LOG(LogTemp, Warning, TEXT("Socket Exists"))
-		GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
+		Projectile->LaunchProjectile(LaunchSpeed);
 	}
 }

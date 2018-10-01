@@ -36,7 +36,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 													)) 
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		auto TankName = GetOwner()->GetName();
 
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowards(AimDirection);

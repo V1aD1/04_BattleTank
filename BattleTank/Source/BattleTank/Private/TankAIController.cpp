@@ -32,6 +32,6 @@ void ATankAIController::Tick(float DeltaSeconds)
 	ThisTank->AimAt(PlayerTank->GetActorLocation());
 
 	//fire at the player
-	ThisTank->Fire();
+	//ThisTank->Fire();
 }
 

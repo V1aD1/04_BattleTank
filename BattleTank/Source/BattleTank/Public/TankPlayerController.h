@@ -21,8 +21,10 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	
-private:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank * GetControlledTank() const;
+
+private:
 
 	//start moving the barrel so that show hits where cross hair is aiming
 	void AimTowardsCrosshair();

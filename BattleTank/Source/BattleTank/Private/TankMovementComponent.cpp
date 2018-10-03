@@ -1,7 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Vlad Baderca
 
-#include "BattleTank.h"
 #include "TankMovementComponent.h"
+#include "BattleTank.h"
 #include "TankTrack.h"
 
 void UTankMovementComponent::InitialiseProperties(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet) {

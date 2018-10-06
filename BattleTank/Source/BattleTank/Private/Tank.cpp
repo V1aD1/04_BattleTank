@@ -20,6 +20,7 @@ ATank::ATank()
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
+	UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank.cpp BeginPlay() called"))
 	Super::BeginPlay();
 	
 }

@@ -32,14 +32,17 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 void ATank::AimAt(FVector HitLocation) const {
+	if (!TankAimingComponent){return;}
 
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire() {
 
-	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if (!TankAimingComponent) { return; }
+
 	UTankBarrel* Barrel = TankAimingComponent->GetBarrel();
+	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
 	if (!Barrel || !IsReloaded)
 	{

@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Copyright Vlad Baderca
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
@@ -10,13 +9,12 @@
 
 
 void  UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
-	if (BarrelToSet) {
 		Barrel = BarrelToSet;
-	}
-
-	if (TurretToSet) {
 		Turret = TurretToSet;
-	}
+}
+
+UTankAimingComponent::UTankAimingComponent() {
+
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -56,6 +54,9 @@ UTankBarrel* UTankAimingComponent::GetBarrel()
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
+	if (!Barrel)
+		return;
+
 	//work out difference between current barrel rotation and aimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
@@ -65,6 +66,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 }
 
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
+	if (!Turret)
+		return;
 
 	auto CurrentTurretRot = Turret->GetForwardVector().Rotation();
 	auto AimRot = AimDirection.Rotation();

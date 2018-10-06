@@ -4,7 +4,7 @@
 #include "BattleTank.h"
 #include "TankTrack.h"
 
-void UTankMovementComponent::InitialiseProperties(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet) {
+void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet) {
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }

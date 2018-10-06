@@ -8,12 +8,15 @@
 #include "Engine/Classes/GameFramework/Actor.h"
 #include "Engine/World.h"
 
-// Sets default values for this component's properties
-UTankAimingComponent::UTankAimingComponent()
-{
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+
+void  UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
+	if (BarrelToSet) {
+		Barrel = BarrelToSet;
+	}
+
+	if (TurretToSet) {
+		Turret = TurretToSet;
+	}
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -47,18 +50,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	}
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
-	if (BarrelToSet)
-	{
-		Barrel = BarrelToSet;
-	}
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
-
-	if (TurretToSet) {
-		Turret = TurretToSet;
-	}
+UTankBarrel* UTankAimingComponent::GetBarrel()
+{
+	return Barrel;
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {

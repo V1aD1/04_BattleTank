@@ -7,7 +7,6 @@
 
 class UTankBarrel; //forward declaration
 class UTankAimingComponent;
-class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()

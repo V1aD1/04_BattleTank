@@ -33,23 +33,27 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 void ATank::AimAt(FVector HitLocation) const {
-	if (!TankAimingComponent){return;}
+	if (!ensure(TankAimingComponent)){return;}
 
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire() {
 
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 
 	UTankBarrel* Barrel = TankAimingComponent->GetBarrel();
-	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (!Barrel || !IsReloaded)
+	if (!ensure(Barrel))
 	{
 		return;
 	}
 
+	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (!IsReloaded)
+	{
+		return;
+	}
 
 	if (Barrel->DoesSocketExist("Projectile")) {
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));

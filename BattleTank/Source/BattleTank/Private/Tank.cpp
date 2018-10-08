@@ -1,6 +1,5 @@
 // Copyright Vlad Baderca
 #include "Tank.h"
-#include "TankAimingComponent.h"
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "Engine/Classes/Components/SceneComponent.h"
@@ -13,7 +12,6 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	//TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
 
 // Called when the game starts or when spawned
@@ -21,8 +19,6 @@ void ATank::BeginPlay()
 {
 	UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank.cpp BeginPlay() called"))
 	Super::BeginPlay();
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	
 }
 
@@ -33,14 +29,8 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ATank::AimAt(FVector HitLocation) const {
-	if (!ensure(TankAimingComponent)){return;}
-
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
-
 void ATank::Fire() {
-
+	/*
 	if (!ensure(TankAimingComponent)) { return; }
 
 	UTankBarrel* Barrel = TankAimingComponent->GetBarrel();
@@ -60,5 +50,5 @@ void ATank::Fire() {
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
-	}
+	}*/
 }

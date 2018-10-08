@@ -4,45 +4,31 @@
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
 #include "BattleTank.h"
-#include "Tank.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	auto TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(TankAimingComponent)) { return; }
 
-	if (!ensure(AimingComponent)) { return; }
-	FoundAimingComponent(AimingComponent);
+	FoundAimingComponent(TankAimingComponent);
 
 }
 
 void ATankPlayerController::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
-
 	AimTowardsCrosshair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const {
-	ATank* ControlledTank = Cast<ATank>(GetPawn());
-
-	if (!ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("No player controller tank found!!"));
-	}
-
-	return ControlledTank;
-}
-
 void ATankPlayerController::AimTowardsCrosshair() {
-	if (!ensure(GetControlledTank())) {
-		return;
-	}
-
+	auto TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(TankAimingComponent)) { return; }
 
 	FVector HitLocation; // out param
 
 	//get world location thorugh crosshair
 	if (GetSightRayHitLocation(HitLocation)) {
 		//aim barrel at this point
-		GetControlledTank()->AimAt(HitLocation);
+		TankAimingComponent->AimAt(HitLocation);
 	}
 }
 
@@ -61,12 +47,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 
 		//line trace along look direction
 		GetLookVectorHitLocation(LookDirection, HitLocation);
-
-
-		//see what we hit
 	}
-
-
 
 	return true;
 }

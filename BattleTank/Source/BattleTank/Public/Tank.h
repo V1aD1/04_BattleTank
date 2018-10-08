@@ -6,7 +6,6 @@
 #include "Tank.generated.h"
 
 class UTankBarrel; //forward declaration
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -21,8 +20,6 @@ public:
 	void Fire();
 
 protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
 	// Sets default values for this pawn's properties
@@ -38,10 +35,10 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000; //todo find sensible firing speed
+	float ReloadTimeInSeconds = 3;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
+	float LaunchSpeed = 4000; //todo find sensible firing speed
 
 	double LastFireTime = 0;
 };

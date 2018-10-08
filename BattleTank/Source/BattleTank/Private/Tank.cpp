@@ -21,6 +21,8 @@ void ATank::BeginPlay()
 {
 	UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank.cpp BeginPlay() called"))
 	Super::BeginPlay();
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	
 }
 

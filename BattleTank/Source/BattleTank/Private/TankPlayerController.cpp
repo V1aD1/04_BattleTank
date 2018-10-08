@@ -9,13 +9,10 @@
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
-	
-	if (AimingComponent) {
-		FoundAimingComponent(AimingComponent);
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Player controller cannot find AIMING COMPONENT at BeginPlay()"))
-	}
+
+	if (!ensure(AimingComponent)) { return; }
+	FoundAimingComponent(AimingComponent);
+
 }
 
 void ATankPlayerController::Tick(float DeltaSeconds) {
@@ -45,7 +42,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	//get world location thorugh crosshair
 	if (GetSightRayHitLocation(HitLocation)) {
 		//aim barrel at this point
-		GetControlledTank()-> AimAt(HitLocation);
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 
@@ -84,7 +81,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	FHitResult HitResult;
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
 
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, StartLocation + LookDirection*LineTraceRange, ECC_Visibility)) {
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, StartLocation + LookDirection * LineTraceRange, ECC_Visibility)) {
 		HitLocation = HitResult.Location;
 		return true;
 	}

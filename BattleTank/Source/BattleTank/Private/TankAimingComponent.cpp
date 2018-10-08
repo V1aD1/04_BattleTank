@@ -6,6 +6,7 @@
 #include "Engine/Classes/Components/StaticMeshComponent.h"
 #include "Engine/Classes/GameFramework/Actor.h"
 #include "Engine/World.h"
+#include "Projectile.h"
 
 
 void  UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
@@ -76,4 +77,18 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 	auto DeltaRotation = AimRot - CurrentTurretRot;
 
 	Turret->Rotate(DeltaRotation.Yaw);
+}
+
+void UTankAimingComponent::Fire() {
+	if (!ensure(Barrel) || !ensure(ProjectileBlueprint)) { return;  }
+	
+	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (!IsReloaded) { return; }
+
+	if (Barrel->DoesSocketExist("Projectile")) {
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile"));
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }

@@ -28,6 +28,14 @@ void UTankAimingComponent::BeginPlay() {
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) { FiringState = EFiringStatus::Reloading; }
+	else if (IsBarrelMoving()) { FiringState = EFiringStatus::Aiming; }
+	else { FiringState = EFiringStatus::Locked; }
+}
+
+bool UTankAimingComponent::IsBarrelMoving() const {
+	if (!ensure(Barrel)) { return false; }
+
+	return !Barrel->GetForwardVector().Equals(AimDirection, 0.01f);
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -48,7 +56,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 													ESuggestProjVelocityTraceOption::DoNotTrace //param necessary for funtion to succeed every frame
 													)) 
 	{
-		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		AimDirection = OutLaunchVelocity.GetSafeNormal();
 
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowards(AimDirection);

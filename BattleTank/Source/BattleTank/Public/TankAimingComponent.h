@@ -52,6 +52,9 @@ private:
 	UTankTurret* Turret = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
 	void MoveTurretTowards(FVector AimDirection);
+	FVector AimDirection = FVector(0.0f, 0.0f, 0.0f);
+	
+	bool IsBarrelMoving() const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;

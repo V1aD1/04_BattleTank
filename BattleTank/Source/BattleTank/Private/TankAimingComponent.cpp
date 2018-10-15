@@ -29,9 +29,15 @@ void UTankAimingComponent::BeginPlay() {
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) { FiringState = EFiringStatus::Reloading; }
-	else if (IsBarrelMoving()) { FiringState = EFiringStatus::Aiming; }
-	else { FiringState = EFiringStatus::Locked; }
+	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) { FiringState = EFiringState::Reloading; }
+	else if (IsBarrelMoving()) { FiringState = EFiringState::Aiming; }
+	else { FiringState = EFiringState::Locked; }
+	
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
 }
 
 bool UTankAimingComponent::IsBarrelMoving() const {
@@ -107,9 +113,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 }
 
 void UTankAimingComponent::Fire() {
-
-
-	if (FiringState == EFiringStatus::Reloading) { return; }
+	if (FiringState == EFiringState::Reloading) { return; }
 
 	if (Barrel->DoesSocketExist("Projectile")) {
 		if (!ensure(Barrel)) { return; }
@@ -120,3 +124,5 @@ void UTankAimingComponent::Fire() {
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
+

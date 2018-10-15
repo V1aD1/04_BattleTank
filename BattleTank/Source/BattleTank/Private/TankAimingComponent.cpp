@@ -10,8 +10,8 @@
 
 
 void  UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet) {
-		Barrel = BarrelToSet;
-		Turret = TurretToSet;
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
 }
 
 UTankAimingComponent::UTankAimingComponent() {
@@ -28,7 +28,7 @@ void UTankAimingComponent::BeginPlay() {
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
+
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) { FiringState = EFiringStatus::Reloading; }
 	else if (IsBarrelMoving()) { FiringState = EFiringStatus::Aiming; }
 	else { FiringState = EFiringStatus::Locked; }
@@ -42,21 +42,21 @@ bool UTankAimingComponent::IsBarrelMoving() const {
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!ensure(Barrel)) { return;  }
+	if (!ensure(Barrel)) { return; }
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
-	
-	if (UGameplayStatics::SuggestProjectileVelocity(this, 
-													OutLaunchVelocity, 
-													StartLocation, 
-													HitLocation, 
-													LaunchSpeed, 
-													false, 
-													0, 
-													0, 
-													ESuggestProjVelocityTraceOption::DoNotTrace //param necessary for funtion to succeed every frame
-													)) 
+
+	if (UGameplayStatics::SuggestProjectileVelocity(this,
+		OutLaunchVelocity,
+		StartLocation,
+		HitLocation,
+		LaunchSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace //param necessary for funtion to succeed every frame
+	))
 	{
 		AimDirection = OutLaunchVelocity.GetSafeNormal();
 
@@ -98,11 +98,16 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 	auto AimRot = AimDirection.Rotation();
 	auto DeltaRotation = AimRot - CurrentTurretRot;
 
-	Turret->Rotate(DeltaRotation.Yaw);
+	if (FMath::Abs(DeltaRotation.Yaw) > 180) {
+		Turret->Rotate(-DeltaRotation.Yaw);
+	}
+	else {
+		Turret->Rotate(DeltaRotation.Yaw);
+	}
 }
 
-void UTankAimingComponent::Fire() {	
-	
+void UTankAimingComponent::Fire() {
+
 
 	if (FiringState == EFiringStatus::Reloading) { return; }
 

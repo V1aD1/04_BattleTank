@@ -27,8 +27,10 @@ void ATankPlayerController::AimTowardsCrosshair() {
 
 	FVector HitLocation; // out param
 
+	auto GotHitLocation = GetSightRayHitLocation(HitLocation);
+
 	//get world location thorugh crosshair
-	if (GetSightRayHitLocation(HitLocation)) {
+	if (GotHitLocation) {
 		//aim barrel at this point
 		TankAimingComponent->AimAt(HitLocation);
 	}
@@ -48,10 +50,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	if (GetLookDirection(ScreenLocation, LookDirection)) {
 
 		//line trace along look direction
-		GetLookVectorHitLocation(LookDirection, HitLocation);
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 
-	return true;
+	return false;
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const {

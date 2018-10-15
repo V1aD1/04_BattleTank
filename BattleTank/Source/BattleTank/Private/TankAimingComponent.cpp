@@ -113,6 +113,8 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) {
 }
 
 void UTankAimingComponent::Fire() {
+	UE_LOG(LogTemp, Warning, TEXT("firing"))
+	
 	if (FiringState == EFiringState::Reloading) { return; }
 
 	if (Barrel->DoesSocketExist("Projectile")) {

@@ -43,11 +43,12 @@ public:
 	EFiringState GetFiringState() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetAmmo() const;
+	int32 GetAmmo() const;
 
 protected:
 	EFiringState FiringState = EFiringState::Reloading;
-	int Ammo = 3;
+	
+
 
 private:
 	UTankAimingComponent();
@@ -64,7 +65,11 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 Ammo = 3;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
+
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000; //todo find sensible firing speed

@@ -7,6 +7,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Engine/EngineTypes.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -19,6 +20,10 @@ public:
 	AProjectile();
 	void LaunchProjectile(float speed);
 
+	// Time until the projectile destroys itself
+	UPROPERTY(EditDefaultsOnly)
+	float DestroyDelay = 1;
+	
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,4 +44,8 @@ private:
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 	
+	UFUNCTION()
+	void DestroyActor();
+
+	FTimerHandle TimerHandle;
 };

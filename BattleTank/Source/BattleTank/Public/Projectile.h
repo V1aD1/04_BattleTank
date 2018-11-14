@@ -8,6 +8,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 #include "Engine/EngineTypes.h"
+#include "Kismet/GameplayStatics.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -19,10 +20,6 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 	void LaunchProjectile(float speed);
-
-	// Time until the projectile destroys itself
-	UPROPERTY(EditDefaultsOnly)
-	float DestroyDelay = 1;
 	
 
 protected:
@@ -41,11 +38,16 @@ protected:
 
 
 private:
+	// Time until the projectile destroys itself
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 1;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage = 20.0f;
+
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 	
 	UFUNCTION()
 	void DestroyActor();
-
-	FTimerHandle TimerHandle;
 };

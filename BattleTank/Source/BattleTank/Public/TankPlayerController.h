@@ -41,4 +41,7 @@ private:
 	//max distance to check if crosshair is colliding with something
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 };
